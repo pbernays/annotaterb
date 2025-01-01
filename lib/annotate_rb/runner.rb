@@ -17,7 +17,7 @@ module AnnotateRb
 
       options = config_file_options.merge(parsed_options)
 
-      @options = Options.from(options, {working_args: remaining_args})
+      @options = Options.new(options, {working_args: remaining_args})
       AnnotateRb::RakeBootstrapper.call(@options)
 
       if @options[:command]

@@ -9,8 +9,8 @@ module AnnotateRb
     extend Forwardable
 
     class << self
-      def from(options = {}, state = {})
-        new(options, state)
+      def defaults
+        new.to_h
       end
     end
 
@@ -97,7 +97,7 @@ module AnnotateRb
     POSITION_DEFAULT = "before"
 
     # Want this to be read only after initializing
-    def_delegators :@options, :[], :to_h
+    def_delegators :@options, :[]
 
     def initialize(options = {}, state = {})
       @options = options
@@ -107,6 +107,10 @@ module AnnotateRb
 
       load_defaults
       @options.freeze
+    end
+
+    def to_h
+      @options.with_indifferent_access
     end
 
     def set_state(key, value, overwrite = false)

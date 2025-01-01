@@ -4,13 +4,6 @@ RSpec.describe AnnotateRb::Options do
   let(:options) { {} }
   let(:state) { {} }
 
-
-  describe ".from" do
-    subject { described_class.from(options, state) }
-
-    it { is_expected.to be_a(described_class) }
-  end
-
   describe ".new" do
     subject { described_class.new(options, state) }
 

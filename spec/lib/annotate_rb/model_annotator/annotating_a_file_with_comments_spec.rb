@@ -11,7 +11,7 @@ RSpec.describe "Annotating a file with comments" do
     end
   end
 
-  let(:options) { AnnotateRb::Options.from({}) }
+  let(:options) { AnnotateRb::Options.new }
   let(:schema_info) do
     <<~SCHEMA
       # == Schema Information
@@ -1201,7 +1201,7 @@ RSpec.describe "Annotating a file with comments" do
   end
 
   context "when overwriting existing annotations using force: true" do
-    let(:options) { AnnotateRb::Options.from({force: true}) }
+    let(:options) { AnnotateRb::Options.new(force: true) }
     let(:schema_info) do
       <<~SCHEMA
         # == Schema Information

@@ -3,7 +3,7 @@ RSpec.describe AnnotateRb::ModelAnnotator::Annotator do
   include AnnotateTestConstants
 
   describe "annotating a file" do
-    let(:options) { AnnotateRb::Options.from({position: :before}) }
+    let(:options) { AnnotateRb::Options.new(position: :before) }
 
     before do
       @model_dir = Dir.mktmpdir("annotate_models")
@@ -54,7 +54,7 @@ RSpec.describe AnnotateRb::ModelAnnotator::Annotator do
       end
 
       it "displays just the error message with trace disabled (default)" do
-        options = AnnotateRb::Options.from({model_dir: @model_dir}, {working_args: []})
+        options = AnnotateRb::Options.new({model_dir: @model_dir}, {working_args: []})
 
         expect { described_class.do_annotations(options) }.to output(a_string_including("Unable to process #{@model_dir}/user.rb: oops")).to_stderr
 
@@ -63,7 +63,7 @@ RSpec.describe AnnotateRb::ModelAnnotator::Annotator do
       end
 
       it "displays the error message and stacktrace with trace enabled" do
-        options = AnnotateRb::Options.from({model_dir: @model_dir, trace: true}, {working_args: []})
+        options = AnnotateRb::Options.new({model_dir: @model_dir, trace: true}, {working_args: []})
         expect { described_class.do_annotations(options) }.to output(a_string_including("Unable to process #{@model_dir}/user.rb: oops")).to_stderr
 
         # TODO: Find another way of testing trace without hardcoding the file name as part of the spec
@@ -83,14 +83,14 @@ RSpec.describe AnnotateRb::ModelAnnotator::Annotator do
       end
 
       it "displays just the error message with trace disabled (default)" do
-        options = AnnotateRb::Options.from({model_dir: @model_dir}, {working_args: []})
+        options = AnnotateRb::Options.new({model_dir: @model_dir}, {working_args: []})
 
         expect { described_class.remove_annotations(options) }.to output(a_string_including("Unable to process #{@model_dir}/user.rb: oops")).to_stderr
         expect { described_class.remove_annotations(options) }.not_to output(a_string_including("/user.rb:2:in `<class:User>'")).to_stderr
       end
 
       it "displays the error message and stacktrace with trace enabled" do
-        options = AnnotateRb::Options.from({model_dir: @model_dir, trace: true}, {working_args: []})
+        options = AnnotateRb::Options.new({model_dir: @model_dir, trace: true}, {working_args: []})
 
         expect { described_class.remove_annotations(options) }.to output(a_string_including("Unable to process #{@model_dir}/user.rb: oops")).to_stderr
         expect { described_class.remove_annotations(options) }.to output(a_string_including("/user.rb:2:in `<class:User>'")).to_stderr

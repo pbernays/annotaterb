@@ -8,7 +8,7 @@ module AnnotateRb
           call(instruction.file, instruction.options)
         end
 
-        def call(file_name, options = Options.from({}))
+        def call(file_name, options = Options.new)
           return false unless File.exist?(file_name)
           old_content = File.read(file_name)
 

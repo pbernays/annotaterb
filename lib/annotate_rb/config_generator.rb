@@ -8,20 +8,16 @@ module AnnotateRb
       #   settings get added.
       def unset_config_defaults
         user_defaults = ConfigLoader.load_config
-        defaults = Options.from({}, {}).to_h
+        defaults = Options.defaults
 
-        differences = defaults.keys - user_defaults.keys
-        result = defaults.slice(*differences).stringify_keys
+        new_keys = defaults.keys - user_defaults.keys
+        differences = defaults.slice(*new_keys)
 
-        # Generates proper YAML including the leading hyphens `---` header
-        yml_content = YAML.dump(result, StringIO.new).string
-        # Remove the header
-        yml_content.sub("---", "")
+        YAML.dump(differences, StringIO.new).string.sub("---", "")
       end
 
       def default_config_yml
-        defaults_hash = Options.from({}, {}).to_h
-        _yml_content = YAML.dump(defaults_hash, StringIO.new).string
+        YAML.dump(Options.defaults, StringIO.new).string
       end
     end
   end
