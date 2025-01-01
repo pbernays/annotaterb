@@ -164,7 +164,7 @@ module AnnotateRb
         timestamps.sort_by! { |col| timestamp_order[col.name] }
         [rest_cols, associations].each { |a| a.sort_by!(&:name) }
 
-        ([id] << rest_cols << timestamps << associations).flatten.compact
+        ([id] << associations << rest_cols << timestamps).flatten.compact
       end
 
       # These are the columns that the globalize gem needs to work but

@@ -97,7 +97,7 @@ module AnnotateRb
     POSITION_DEFAULT = "before"
 
     # Want this to be read only after initializing
-    def_delegators :@options, :[]
+    def_delegators :@options, :[], :to_h
 
     def initialize(options = {}, state = {})
       @options = options
@@ -107,10 +107,6 @@ module AnnotateRb
 
       load_defaults
       @options.freeze
-    end
-
-    def to_h
-      @options.with_indifferent_access
     end
 
     def set_state(key, value, overwrite = false)

@@ -13,11 +13,17 @@ module AnnotateRb
         new_keys = defaults.keys - user_defaults.keys
         differences = defaults.slice(*new_keys)
 
-        YAML.dump(differences, StringIO.new).string.sub("---", "")
+        to_yaml(differences).sub("---", "")
       end
 
       def default_config_yml
-        YAML.dump(Options.defaults, StringIO.new).string
+        to_yaml Options.defaults
+      end
+
+      private
+
+      def to_yaml(hash)
+        YAML.dump(hash, StringIO.new, stringify_names: true).string
       end
     end
   end
