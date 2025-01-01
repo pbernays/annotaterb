@@ -11,7 +11,7 @@ module AnnotateRb
         defaults = Options.from({}, {}).to_h
 
         differences = defaults.keys - user_defaults.keys
-        result = defaults.slice(*differences)
+        result = defaults.slice(*differences).stringify_keys
 
         # Generates proper YAML including the leading hyphens `---` header
         yml_content = YAML.dump(result, StringIO.new).string
